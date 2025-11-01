@@ -1,0 +1,17 @@
+---
+- name: Install and run nginx on localhost
+  hosts: localhost
+  become: yes
+
+  # install nginx in arch
+  tasks:
+    - name: check nginx is installed
+      pacman:
+        name: nginx
+        state: present
+
+    - name: run and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
