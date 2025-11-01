@@ -57,7 +57,7 @@ body {
 /* Hero Section */
 .hero {
   height: 100vh;
-  background: url("assets/images/home/hero-bg.png") no-repeat center center/cover;
+  background: url("/assets/images/home/hero-bg.png") no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -360,7 +360,7 @@ body {
 
 .ready-to-ride {
   position: relative;
-  background-image: url("assets/images/home/ready-to-ride-bg.png");
+  background-image: url("/assets/images/home/ready-to-ride-bg.png");
   background-size: cover;
   background-position: left center;
   background-repeat: no-repeat;
