@@ -270,8 +270,8 @@ body {
 .benefit-note {
   font-size: 0.9rem;
   color: #777;
-  margin-top: -30px; 
-  margin-bottom: 50px; 
+  margin-top: -30px;
+  margin-bottom: 50px;
   font-style: italic;
   text-align: center;
   line-height: 1.4;
@@ -1051,7 +1051,7 @@ body {
 
 .bike-image {
   flex: 1 1 50%;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .bike-image img {
