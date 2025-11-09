@@ -1052,14 +1052,19 @@ body {
 .bike-image {
   flex: 1 1 50%;
   max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bike-image img {
   width: 100%;
-  height: 480px;
-  object-fit: cover;
+  max-width: 800px;
+  height: auto; 
+  object-fit: contain;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background-color: transparent;
+  box-shadow: none; 
 }
 
 .bike-info {
@@ -1080,14 +1085,6 @@ body {
   font-size: 1rem;
   color: #555;
   line-height: 1.6;
-}
-
-.price-list,
-.detail-list,
-.inclusion-list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 10px;
 }
 
 .price-list,
@@ -1129,7 +1126,9 @@ body {
   }
 
   .bike-image img {
-    height: 380px;
+    width: 100%;
+    height: auto;
+    max-width: 600px;
   }
 
   .bike-info {
