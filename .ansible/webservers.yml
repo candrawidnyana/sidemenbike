@@ -1,0 +1,6 @@
+---
+- hosts: webstatics
+  become: true
+
+  roles:
+    - webstatic

@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: ensure ssh is running
+      service:
+        name: sshd
+        state: started
+        enabled: yes
+    - name: install nginx
+      community.general.pacman:
+        name: nginx
+        state: present
+    - name: run nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+  

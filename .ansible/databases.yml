@@ -1,0 +1,7 @@
+---
+- name: Setup database server
+  hosts: databases
+  connection: local
+  become: true
+  roles:
+    - database

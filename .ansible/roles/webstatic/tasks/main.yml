@@ -1,0 +1,55 @@
+---
+  - name: Install nginx
+    pacman:
+      name: nginx
+      state: present
+ 
+  - name: start nginx service
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+
+  - name: recursively delete old config file
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items:
+      - path: /var/www/html/project
+      - path: /etc/nginx/sites-available/default
+
+  - name: copy nginx config and static folder
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+      - src: project/nginx.conf 
+        dest: /etc/nginx/sites-available/default
+      - src: project
+        dest: /var/www/html/project
+    validate: "nginx -t"
+    notify: restart nginx
+
+  #- name: start nginx service
+  #  service:
+  #    name: nginx
+  #    state: started
+  #    enabled: yes
+
+  # generate certificate if domain exist
+  - name: install certbot
+    pacman:
+      name: "{{ item.name }}"
+    state: present
+    with_items:
+      - name: certbot
+      - name: certbot-nginx #apt install python3-certbot-nginx
+
+  # certbot to domain
+  - name: add certbot in selected domain
+    command: >
+      sudo certbot --nginx -d "{{ domain_name }}" -d www."{{ domain_name }}"
+    notify: restart nginx

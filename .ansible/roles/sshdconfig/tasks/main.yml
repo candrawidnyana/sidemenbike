@@ -1,0 +1,26 @@
+---
+  - name: create user linux
+    user:
+      state: present
+      shell: /bin/bash
+      groups: "{{ groups_var }}"
+      home: /home/"{{ linux_username }}"
+      name: "{{ linux_username }}"
+      update_password: on_create
+      password: "{{ linux_password }}"
+  - name:  
+  - name: update sshd config to follow best practice
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      state: present
+      validate: "sshd -t %s" #%s -> /etc/ssh/sshd_config
+    with_items:
+      - regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
+      - regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+      - regexp: "^Port"
+        line: "Port 2208"
+    notify: restart ssh

@@ -1,0 +1,60 @@
+---
+  - name: ensure postgresql is installed
+    pacman:
+      name: postgresql
+      state: present
+
+  - name: ensure postgresql data directory exist
+    file:
+      path: /var/lib/postgres/data
+      state: directory
+      owner: postgres
+      group: postgres
+      mode: '0700'
+
+  - name: Initialize PostgreSQL database if not already initialized
+    become_user: postgres
+    command: >
+      initdb --locale {{ ansible_env.LANG | default('en_US.UTF-8') }} -E UTF8 -D /var/lib/postgres/data
+    args:
+      creates: /var/lib/postgres/data/PG_VERSION
+
+  - name: ensure install pip
+    package:
+      name: python-pip
+      state: present
+
+  - name: install psycopg2 if not exist
+    pacman:
+      name: python-psycopg2
+      state: present
+
+  - name: ensure postgresql is running
+    service:
+      name: postgresql
+      state: started
+      enabled: yes
+
+  - name: create database and grant to user
+    community.postgresql.postgresql_db:
+      name: "{{ db_name }}"
+      state: present
+    become_user: postgres
+
+  - name: user of database
+    community.postgresql.postgresql_user:
+      name: "{{ db_user_username }}"
+      password: "{{ db_user_password }}"
+      state: present
+    environment:
+      PGOPTIONS: "-c password_encryption=scram-sha-256"
+
+  - name: grant all privileges of db to new user
+    community.postgresql.postgresql_privs:
+      state: present
+      login_db: postgres
+      role: "{{ db_user_username }}"
+      obj: "{{ db_name }}"
+      type: database
+      privs: ALL # for database type
+

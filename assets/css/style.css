@@ -96,21 +96,32 @@ body {
 
 /* Hero Section */
 .hero {
+  position: relative;
   height: 100vh;
-  background: url("/assets/images/home/hero-image.JPG") no-repeat center center/cover;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   color: white;
-  position: relative;
 }
 
-.hero::after {
-  content: "";
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* biar full tanpa distorsi */
+  z-index: 0;
+}
+
+.hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35); /* efek gelap */
+  z-index: 1;
 }
 
 .hero-content {
@@ -123,6 +134,13 @@ body {
   font-size: 5rem;
   line-height: 1.3;
   font-weight: 600;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
 }
 
 /* About Section */
@@ -517,12 +535,9 @@ body {
   }
 }
 
+/* ===== Ready to Ride Section ===== */
 .ready-to-ride {
   position: relative;
-  background-image: url("/assets/images/home/ready-to-ride-bg.png");
-  background-size: cover;
-  background-position: left center;
-  background-repeat: no-repeat;
   height: 450px;
   border-radius: 0;
   margin-top: 150px;
@@ -534,11 +549,20 @@ body {
   justify-content: center;
 }
 
-.ready-to-ride::before {
-  content: "";
+.ready-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 30%, rgba(0, 0, 0, 0.45) 65%, /* kanan agak gelap */ rgba(0, 0, 0, 0.65) 100%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  z-index: 0;
+}
+
+.ready-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 30%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.65) 100%);
   z-index: 1;
 }
 
@@ -610,6 +634,7 @@ body {
   box-shadow: 0 12px 28px rgba(11, 67, 51, 0.28);
 }
 
+/* Responsive */
 @media (max-width: 1000px) {
   .ready-left {
     width: 38%;
@@ -1060,11 +1085,11 @@ body {
 .bike-image img {
   width: 100%;
   max-width: 800px;
-  height: auto; 
+  height: auto;
   object-fit: contain;
   border-radius: 12px;
   background-color: transparent;
-  box-shadow: none; 
+  box-shadow: none;
 }
 
 .bike-info {
