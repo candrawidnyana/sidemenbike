@@ -143,6 +143,13 @@ body {
   }
 }
 
+/* Responsif */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
 /* About Section */
 .about {
   margin-top: 200px;
